@@ -61,8 +61,9 @@ export const Login = () => {
         });
 
         // const data  = await response.json();
-const {encodedToken} = await response.json()
 
+const {encodedToken} = await response.json()
+console.log(encodedToken);
         if (encodedToken) {
           // Login successful
           console.log("Logged in");
@@ -116,7 +117,7 @@ const {encodedToken} = await response.json()
         </div>
         <div className="login-buttons">
           <button type="submit" onClick={submitHandler}>Login</button>
-          <button type="submit" onClick={loginAsTestUser } >Login as Test User</button>
+          <button type="submit" onClick={loginAsTestUser } >Fill Test User Detail</button>
           <strong style={{color: "green" , cursor: "pointer"}} onClick={() => navigate("/signup")}>Create New Account  </strong>
         </div>
       </div>
