@@ -72,6 +72,7 @@ const {encodedToken} = await response.json()
             password: ""
           });
           toast.success("Logged In successfully" , {autoClose : 1000});
+          navigate(location?.state?.from?.pathname || "/products" )
         } else {
           // Login failed
           console.log("Login failed");
@@ -81,7 +82,7 @@ const {encodedToken} = await response.json()
       }
     }
     
-    navigate(location?.state?.from?.pathname || "/products" )
+    
   };
  const loginAsTestUser = () => {
   setFormData({email: "adarshbalika@gmail.com",
