@@ -1,6 +1,13 @@
+*{
+  margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
+
 
 .App-logo {
   height: 40vmin;
@@ -48,4 +55,11 @@
   color: #d9d9d9;
   font-size: 1.2rem;
   margin: 1rem;
+}
+button{
+  cursor: pointer;
+}
+
+.cursor-pointer{
+  cursor: pointer;
 }

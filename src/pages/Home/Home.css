@@ -1,0 +1,125 @@
+.home{
+   margin-top: 5rem;
+}
+.container {
+    background-color: #fff6f9;
+    background: linear-gradient(to right, #b1b4d5 0%, #fff6f9 50%);
+    height: 22rem;
+    display: flex;
+    /* flex-direction: co; */
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 3rem;
+  }
+  
+
+  
+  .call {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+
+  
+  
+  .spot-title {
+    color: #5e17eb;
+    font-size: 4rem;
+    margin-bottom: 0rem;
+  }
+  
+  .spot-description {
+    color: #ff3131;
+    text-align: right;
+    font-size: 18px;
+    font-weight: 600;
+    font-style: oblique;
+  }
+  
+  .spot-image {
+    height: 15rem;
+    width: 25rem;
+  }
+  
+  .shop-button {
+    border: none;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    background-color: #5e17eb;
+    color: white;
+    font-size: 16px;
+    transition: 750ms;
+  }
+  
+  .shop-button:hover {
+    background-color: rgb(4, 0, 73);
+  }
+  
+  @media (max-width: 800px) {
+    .spot-image {
+      height: 10rem;
+      width: 18rem;
+    }
+  
+    .shop-button {
+      padding: 0.5rem 0.8rem;
+      font-size: 13px;
+    }
+  
+    .spot-title {
+      font-size: 3.3rem;
+    }
+  
+    .spot-description {
+      font-size: 15px;
+    }
+
+  }
+  
+  @media (max-width: 600px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+      height: 22rem;
+      justify-content: space-around;
+    }
+  
+    .spot-image {
+      height: 8rem;
+      width: 15rem;
+    }
+  
+    .call {
+      height: auto;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    
+  }
+  .category-container {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  .pets-category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .pets-image {
+    height: 12rem;
+    border-radius: 18rem;
+    transition: 550ms;
+  }
+  .pets-image:hover {
+    box-shadow: 0px 0px 8px rgb(174, 162, 162);
+  }
