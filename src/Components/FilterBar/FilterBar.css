@@ -60,7 +60,7 @@ hr {
 
 @media (max-width: 600px) {
   .all-filters {
-    position: relative;
+    position: sticky;
     top: 0%;
     bottom: 0%;
     margin-top: 1rem; 
