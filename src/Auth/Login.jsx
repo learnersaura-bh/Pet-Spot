@@ -45,10 +45,10 @@ export const Login = () => {
     return isValid;
   };
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
+  const submitHandler = async () => {
+    // e.preventDefault();
 
-    if (validateForm()) {
+    // if (validateForm()) {
       try {
         const cred = {
           email: formData.email,
@@ -62,7 +62,7 @@ export const Login = () => {
 
         // const data  = await response.json();
 const {encodedToken} = await response.json()
-localStorage.setItem("token" , encodedToken)
+
         if (encodedToken) {
           // Login successful
           console.log("Logged in");
@@ -81,7 +81,7 @@ localStorage.setItem("token" , encodedToken)
       } catch (e) {
         console.error(e);
       }
-    }
+    // }
     
     
   };
