@@ -63,8 +63,9 @@ hr {
 @media (max-width: 600px) {
   .all-filters {
     position: relative;
-    left: 0%;
-    top: 0;
+    top: 0%;
+    bottom: 0%;
+    margin-top: 1rem; 
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -74,7 +75,6 @@ hr {
     overflow-y: none;
     padding: 0.3rem 0.2rem;
     background-color: rgb(73, 232, 163);
-    position: fixed;
     z-index: 999;
     width: 100vw;
     font-size: 0.8rem;
