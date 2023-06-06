@@ -62,6 +62,7 @@ export const Login = () => {
 
         // const data  = await response.json();
 const {encodedToken} = await response.json()
+localStorage.setItem("token" , encodedToken)
         if (encodedToken) {
           // Login successful
           console.log("Logged in");
