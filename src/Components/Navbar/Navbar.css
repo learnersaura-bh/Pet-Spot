@@ -14,7 +14,7 @@ nav {
     margin-left: 6px;
   }
   .nav-bar {
-    background-color: rgb(47, 107, 186);
+    /* background-color: rgb(47, 107, 186); */
     background-color: rgb(69, 87, 190);
   }
   .search-bar {
@@ -60,7 +60,6 @@ nav {
       grid-area: heading;
     }
     .nav-bar {
-      background-color: rgb(52, 185, 11);
       height: 7rem;
       display: grid;
       grid-template-areas:
