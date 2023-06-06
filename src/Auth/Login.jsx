@@ -45,8 +45,8 @@ export const Login = () => {
     return isValid;
   };
 
-  const submitHandler = async () => {
-    // e.preventDefault();
+  const submitHandler = async (e) => {
+    e.preventDefault();
 
     if (validateForm()) {
       try {
