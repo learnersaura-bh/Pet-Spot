@@ -59,6 +59,7 @@ const {state} = useContext(DataContext)
           {selectedAddress ? (
         <div>
           <h3>Deliver To:</h3>
+          <h4>{selectedAddress.name}</h4>
           <p>{selectedAddress.street} , {selectedAddress.city} </p>
           <p>State : {selectedAddress.state}</p>
           <p>Zip Code : {selectedAddress.zip}</p>
@@ -68,7 +69,7 @@ const {state} = useContext(DataContext)
         <p>No address selected. Please choose an address.</p>
       )}
           </div>
-          <button onClick={() => navigate('/checkout')} className="checkout-btn">Place Order</button>
+          <button className="checkout-btn">Place Order</button>
         </div>
       </div>
 : <h3>No items in cart right now :( </h3>
