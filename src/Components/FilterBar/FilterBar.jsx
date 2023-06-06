@@ -16,7 +16,7 @@ export const FilterBar = () => {
       value: "Birds"
     }
   ];
-  const {state , dispatch, categoryName} = useContext(DataContext)
+  const {state , dispatch} = useContext(DataContext)
     
     const handleSort = (e) => {
         console.log(e.target.name , e.target.value );
@@ -107,29 +107,3 @@ export const FilterBar = () => {
     </div>
   );
 };
-
-
-// <fieldset>
-// <legend>Filters</legend> 
-// {
-//     filterByCategoryList.map(({name,value})=> <label key={value}> <input type="checkbox" value={value} onChange={handleCheckBox}  checked={state.filters.categories.includes(value)} /> {name} </label> )
-// }
-// <label><input type="radio" name="price-order" value="low-to-high" checked={state.filters.priceSort === "low-to-high"} onChange={handleSort}/>Low to high</label>
-// <label><input type="radio" name="price-order" value="high-to-low" checked={state.filters.priceSort === "high-to-low"} onChange={handleSort}/>High to Low</label>
-// {/* Rating Slider */}
-// <div>
-// <label>0 <input type="range" list="tickmark" min="0"
-// max="5"
-// step="0.5" name="rating" value={state.filters.ratingFilter || ""}  title={state.filters.ratingFilter} onChange={handleRatingSlider} /> 
-// 5</label>
-// <datalist id="tickmark"><option value="0" label="0"></option>
-// <option value="1"></option>
-// <option value="2"></option>
-// <option value="3"></option>
-// <option value="4"></option>
-// <option value="5"></option>
-// </datalist>
-
-// </div>
-// <button onClick={()=>dispatch({type: "clear-filter"})}>Clear</button>
-// </fieldset>
