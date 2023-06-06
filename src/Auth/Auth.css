@@ -3,7 +3,6 @@
     justify-content: center;
   }
   .login-page {
-    /* height: 45%; */
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -19,6 +18,7 @@
     display: flex;
     flex-direction: column;
   }
+ 
   .label-input input {
     padding: 6px;
     border-radius: 6px;
