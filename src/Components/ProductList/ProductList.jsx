@@ -1,24 +1,20 @@
 
 
 // import {useNavigate} from "react-router"
-import { NavLink, useLocation, useNavigate } from "react-router-dom"
-
+import {  useNavigate } from "react-router-dom"
 import * as AiIcon from "react-icons/ai";
 import "./ProductList.css";
 import { useContext } from "react";
 import { DataContext } from "../../Contexts/DataContext";
 export const ProductList = ({ item }) => {
 
-  const { categoryName, _id, price, imgUrl, title, rating } = item;
+  const {  _id, price, imgUrl, title, rating } = item;
   const navigate = useNavigate()
-  const location = useLocation()
-    const {state , dispatch , addToCart , addToWishList , removeFromWishlist} = useContext(DataContext)
+  
+    const {state ,  addToCart , addToWishList , removeFromWishlist} = useContext(DataContext)
     
     console.log("state" , state)
 
-  
-  
- 
 
   return (
     <li key={_id}>

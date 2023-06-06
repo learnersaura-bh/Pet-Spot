@@ -6,6 +6,8 @@
     background: linear-gradient(to right, #b1b4d5 0%, #fff6f9 50%);
     height: 22rem;
     display: flex;
+    margin-left: 2rem ;
+    margin-right: 2rem;
     /* flex-direction: co; */
     justify-content: space-around;
     align-items: center;

@@ -33,9 +33,9 @@ export const Home = () => {
         </li>
       ))}
     </div>
-    <footer>
+    {/* <footer>
       <h1> links</h1>
-    </footer>
+    </footer> */}
       </div>
     );
   };
