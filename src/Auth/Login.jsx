@@ -86,10 +86,42 @@ console.log(encodedToken);
     
     
   };
- const loginAsTestUser = () => {
+ const loginAsTestUser = async() => {
   setFormData({email: "adarshbalika@gmail.com",
             password: "adarshbalika"}) 
-            submitHandler()
+            try {
+              const cred = {
+                email: "adarshbalika@gmail.com",
+                password: "adarshbalika"
+              };
+      
+              const response = await fetch("/api/auth/login", {
+                method: "POST",
+                body: JSON.stringify(cred)
+              });
+      
+              // const data  = await response.json();
+      
+      const {encodedToken} = await response.json()
+      console.log(encodedToken);
+              if (encodedToken) {
+                // Login successful
+                console.log("Logged in");
+                console.log(encodedToken);
+                localStorage.setItem("token" , encodedToken)
+                setFormData({
+                  email: "",
+                  password: ""
+                });
+                toast.success("Logged In successfully" , {autoClose : 1000});
+                navigate(location?.state?.from?.pathname || "/products" )
+              } else {
+                // Login failed
+                console.log("Login failed");
+              }
+            } catch (e) {
+              console.error(e);
+            } 
  }
   return (
     <div className="login-container">
@@ -117,7 +149,7 @@ console.log(encodedToken);
         </div>
         <div className="login-buttons">
           <button type="submit" onClick={submitHandler}>Login</button>
-          <button type="submit" onClick={loginAsTestUser } >Fill Test User Detail</button>
+          <button type="submit" onClick={loginAsTestUser} >Login as Test User</button>
           <strong style={{color: "green" , cursor: "pointer"}} onClick={() => navigate("/signup")}>Create New Account  </strong>
         </div>
       </div>
