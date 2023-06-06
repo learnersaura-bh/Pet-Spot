@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { DataContext } from "../../Contexts/DataContext";
 import {useNavigate  } from "react-router"
-
+import * as AiIcons from "react-icons/ai";
 import "./Home.css"
 export const Home = () => {
     const { state, dispatch } = useContext(DataContext);
@@ -33,9 +33,37 @@ export const Home = () => {
         </li>
       ))}
     </div>
-    {/* <footer>
-      <h1> links</h1>
-    </footer> */}
+    <footer>
+        <span className="link-icons">
+          {" "}
+          <a
+            href="https://www.linkedin.com/in/saurabh-rawat-0843551a1/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <AiIcons.AiFillLinkedin size="30" color="white" />
+          </a>{" "}
+        </span>
+        <span className="link-icons">
+          {" "}
+          <a
+            href="https://twitter.com/SaurabhDev_"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <AiIcons.AiOutlineTwitter size="30" color="white" />
+          </a>{" "}
+        </span>
+        <span className="link-icons">
+          <a
+            href="https://github.com/learnersaura-bh/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <AiIcons.AiFillGithub size="30" color="white" />
+          </a>{" "}
+        </span>
+      </footer>
       </div>
     );
   };
