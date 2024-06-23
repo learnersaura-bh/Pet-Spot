@@ -1,47 +1,50 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-  }
-  .login-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    border: 1px solid rgb(209, 200, 200);
-    padding: 1.5rem 5rem;
-    box-shadow: 0 0 12px rgb(198, 192, 192);
-    text-align: left;
-    gap: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 88vh;
+}
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(138, 138, 138);
+  padding: 1.5rem 5rem;
+  box-shadow: 0 0 12px rgb(198, 192, 192);
+  text-align: left;
+  gap: 1rem;
+  min-height: 400px;
+  background-color: #c5c5c5;
+  border-radius: 6px;
+}
+.label-input {
+  display: flex;
+  flex-direction: column;
+}
 
-  }
-  .label-input {
-    display: flex;
-    flex-direction: column;
-  }
- 
-  .label-input input {
-    padding: 6px;
-    border-radius: 6px;
-  }
-  .login-buttons {
-    display: flex;
-  
-    width: 100%;
-    gap: 6px;
-    flex-direction: column;
-  }
-  .login-buttons button {
-    background-color: rgb(81, 51, 216);
-    padding: 6px;
-    color: white;
-    border: none;
-    border-radius: 6px;
-  }
-  .login-buttons button:hover {
-    background-color: rgba(81, 51, 216, 0.885);
-  }
-  
-  .login-buttons button:active {
-    background-color: rgb(81, 51, 216);
-  }
-  
+.label-input input {
+  padding: 6px;
+  border-radius: 6px;
+}
+.login-buttons {
+  display: flex;
+
+  width: 100%;
+  gap: 6px;
+  flex-direction: column;
+}
+.login-buttons button {
+  background-color: rgb(53, 53, 53);
+  padding: 6px;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+.login-buttons button:hover {
+  background-color: rgb(21, 21, 21);
+}
+
+.login-buttons button:active {
+  background-color: rgb(11, 11, 11);
+}

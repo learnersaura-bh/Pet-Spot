@@ -7,7 +7,7 @@ import * as AiIcon from "react-icons/ai";
 const features = [
   "Fastest Delivery",
   "Inclusive of All Taxes",
-  "Cash On Delivery Available"
+  "Cash On Delivery Available",
 ];
 
 export const ProductDetail = () => {
@@ -21,7 +21,7 @@ export const ProductDetail = () => {
   if (!product) {
     return <p>Product not found.</p>;
   }
-  const {_id, price,imgUrl, title, rating } = product;
+  const { _id, price, imgUrl, title, rating } = product;
 
   return (
     <div className="product-detail-card">

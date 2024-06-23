@@ -1,69 +1,62 @@
 import { useContext } from "react";
 import { DataContext } from "../../Contexts/DataContext";
-import {useNavigate  } from "react-router"
-import * as AiIcons from "react-icons/ai";
-import "./Home.css"
+import { useNavigate } from "react-router";
+import "./Home.css";
+import { setCategoryFilter } from "../../actions/actions";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 export const Home = () => {
-    const { state, dispatch } = useContext(DataContext);
-    const navigate = useNavigate()
-    return (
-      <div className="home">
-        <section class="container">
-  <div class="call">
-    <h1 class="spot-title">Pet Spot</h1>
-    <p class="spot-description">The Best A Pet Can Get</p>
-    <button class="shop-button" onClick={() => navigate("/products")}>Shop Now</button>
-  </div>
-  <img class="spot-image"
-    src="https://d11d9oqz0intmj.cloudfront.net/PmTkdOuVNHihJQx.png"
-    alt="pet spot"
-  />
-</section>
+  const { state, dispatch } = useContext(DataContext);
+  const navigate = useNavigate();
 
-        <div className="category-container">
-      {state.category?.map(({ _id , categoryName, imageUrl }) => (
-        <li key={_id}>
-          <div className="pets-category">
-            {" "}
-            <img className="pets-image" src={imageUrl} alt={categoryName} onClick={() =>{ navigate("/products")
-        dispatch({type : "handleByCategory" , payload: categoryName})
-          }} />
-            <h3>{categoryName}</h3>
+  if (state.error) {
+    return <h1>{state.error}</h1>;
+  }
+
+  return (
+    <div className="home">
+      <section className="hero-carousel">
+        <Carousel autoPlay interval={5000} infiniteLoop showThumbs={false}>
+          <div className="carousel-item">
+            <img src="hero.jpg" alt="Slide 1" />
+            <div className="carousel-caption">
+              <h1>Pet Spot</h1>
+              <p>The Best Spot For Your Pet</p>
+              <button onClick={() => navigate("/products")}>Shop Now</button>
+            </div>
           </div>
-        </li>
-      ))}
-    </div>
-    <footer>
-        <span className="link-icons">
-          {" "}
-          <a
-            href="https://www.linkedin.com/in/saurabh-rawat-0843551a1/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <AiIcons.AiFillLinkedin size="30" color="white" />
-          </a>{" "}
-        </span>
-        <span className="link-icons">
-          {" "}
-          <a
-            href="https://twitter.com/SaurabhDev_"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <AiIcons.AiOutlineTwitter size="30" color="white" />
-          </a>{" "}
-        </span>
-        <span className="link-icons">
-          <a
-            href="https://github.com/learnersaura-bh/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <AiIcons.AiFillGithub size="30" color="white" />
-          </a>{" "}
-        </span>
-      </footer>
+          <div className="carousel-item second-slide">
+            <img
+              src="https://supertails.com/cdn/shop/files/Monsoon_Mainia__Web-min_d6dded29-1d8f-43c1-b0ac-ce4a30a0fc63.png?v=1718947579"
+              alt="Slide 2"
+            />
+            <div className="second-carousel-caption">
+              <button onClick={() => navigate("/products")}>
+                Shop Now {">"}{" "}
+              </button>
+            </div>
+          </div>
+        </Carousel>
+      </section>
+
+      <div className="category-container">
+        {state.categories?.map(({ _id, categoryName, imageUrl }) => (
+          <li key={_id}>
+            <div className="pets-category">
+              <img
+                className="pets-image"
+                src={imageUrl}
+                alt={categoryName}
+                onClick={() => {
+                  navigate("/products");
+                  dispatch(setCategoryFilter(categoryName));
+                }}
+              />
+              <h3>{categoryName}</h3>
+            </div>
+          </li>
+        ))}
       </div>
-    );
-  };
+    </div>
+  );
+};

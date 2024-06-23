@@ -1,5 +1,5 @@
 import "./Products.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DataContext } from "../../Contexts/DataContext";
 import { FilterBar } from "../../Components/FilterBar/FilterBar";
 import { ProductList } from "../../Components/ProductList/ProductList";
@@ -34,6 +34,10 @@ export const Products = () => {
           : b.price - a.price
       )
     : ratingData;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="products-page">

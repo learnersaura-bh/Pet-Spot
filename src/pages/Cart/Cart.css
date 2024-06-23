@@ -1,116 +1,118 @@
 .cart-page {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 1rem;
-  }
-  .cart-item {
-  }
-  
-  .single-cart-card {
-    display: flex;
-    border: 1px solid rgba(158, 157, 157, 0.269);
-    padding: 2rem;
-    box-shadow: 0px 0px 8px rgb(158, 157, 157);
-    border-radius: 6px;
-    flex-wrap: wrap;
-  }
-  .cart-product-detail {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .cart-item {
-    display: flex;
-    flex-direction: column;
-    
-  }
-  .icon-para {
-    display: flex;
-    align-items: center;
-  }
-  .rating {
-    display: flex;
-    justify-content: end;
-    font-size: 1.4rem;
-  }
-  .buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .product-card-button {
-    padding: 4px;
-    background-color: rgb(109, 83, 199);
-    color: white;
-    cursor: pointer;
-    margin-top: 3px;
-    border: none; 
-  }
-  .product-card-button:hover {
-    background-color: rgba(108, 83, 199, 0.919);
-  }
-  .quantity {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .quantity button {
-    font-size: 1.5rem;
-  width: 2.5rem;
-  height: 2rem;
-  }
-  .quantity span {
-    border: 1px solid;
-    width: 2rem;
-    text-align: center;
-    margin: 8px;
-    padding: 4px 6px;
-    font-size: 1rem;
-  }
-  .product-card-button:active {
-    background-color: rgb(109, 83, 199);
-  }
-  .cart-price {
-    display: flex;
-  }
-  .cart-price-detail{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .price-details {
-    justify-self: end;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid rgb(177, 169, 169);
-    padding: 1rem;
-    box-shadow: 0 0 12px rgb(169, 165, 165);
-    gap: 1rem;
-    padding: 2rem 3rem;
-    /* width: 250px; */
-    /* height: 280px; */
-  }
-  .price-body {
-    display: flex;
-    justify-content: space-between;
-    /* font-size: 19px; */
-  }
-  .checkout-btn {
-    padding: 6px;
-    background-color: rgb(109, 83, 199);
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    border: none;
-  }
-  
-  .checkout-btn:hover {
-    background-color: rgba(83, 53, 191, 0.89);
-  }
-  .checkout-btn:active {
-    background-color: rgb(83, 53, 191);
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 1rem;
+  height: 80vh;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.single-cart-card {
+  display: flex;
+  border: 1px solid rgba(158, 157, 157, 0.269);
+  padding: 2rem;
+  box-shadow: 0px 0px 8px rgb(158, 157, 157);
+  border-radius: 6px;
+  flex-wrap: wrap;
+}
+
+.single-cart-card img {
+  margin: 0 16px 0 -26px;
+  height: 170px;
+  object-fit: cover;
+  flex-grow: 1;
+  mix-blend-mode: multiply;
+}
+
+.cart-product-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.icon-para {
+  display: flex;
+  align-items: center;
+}
+.rating {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.4rem;
+}
+
+.quantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.quantity button {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.quantity button:hover {
+  background-color: #625e5e;
+  color: #fff;
+}
+
+.quantity span {
+  border: 1px solid;
+  width: 2rem;
+  text-align: center;
+  margin: 8px;
+  padding: 4px 6px;
+  font-size: 1rem;
+}
+
+.cart-price {
+  display: flex;
+}
+.cart-price-detail {
+  align-self: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.price-details {
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgb(103, 103, 103);
+  padding: 1rem;
+  box-shadow: 0 0 12px rgb(169, 165, 165);
+  gap: 1rem;
+  padding: 2rem 3rem;
+  width: 400px;
+}
+.price-body {
+  display: flex;
+  justify-content: space-between;
+}
+.checkout-btn {
+  padding: 8px;
+  background-color: rgb(32, 32, 32);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+}
+
+.checkout-btn:hover {
+  background-color: rgb(0, 0, 0);
+}
+.checkout-btn:active {
+  background-color: rgb(10, 10, 10);
+}

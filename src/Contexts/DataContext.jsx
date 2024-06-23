@@ -1,181 +1,192 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { toast } from 'react-toastify';
-export const DataContext = createContext()
-const initialState = { category : [] , productList : [] , filters : {
-    priceSort: null,
-    categories: [],
-    ratingFilter: null,
-  }, cartList:[],
-wishList : [],
-searchValue : null }
-// Reducer Function
-const DataReducer = (state , action) =>{
-switch(action.type){
-    case "category_handle":
-        return{...state , category : action.payload}
-    case "productFetch":
-        return{...state , productList : action.payload}
-    case "price-order":
-        return{...state, filters:{...state.filters , priceSort : action.payload}}
-    case "handleByCategory":
-                const isCheckboxAlreadyPresent = state.filters.categories.find((category)=> category === action.payload )
-        return{...state , filters : { ...state.filters , categories : isCheckboxAlreadyPresent ? state.filters.categories.filter((category)=> category !== action.payload) : [...state.filters.categories , action.payload] }}
-    case "set-rating-filter":
-        return {...state , filters:{...state.filters , ratingFilter : action.payload}}
-    case "clear-filter":
-        return {...state , filters : initialState.filters }
-    case "cart-manager":
-        return {...state , cartList : action.payload}
-    case "wishlist-manager":
-        return {...state , wishList : action.payload}
-    case "search-handle":
-        return{...state , searchValue : action.payload}
-    case "INCREMENT_QUANTITY":
-            return {
-              ...state,
-              cartList: state.cartList.map((item) =>
-                item._id === action.payload ? { ...item, qty: item.qty + 1 } : item
-              ),
-            };
-          case "DECREMENT_QUANTITY":
-            return {
-              ...state,
-              cartList: state.cartList.map((item) =>
-                item._id === action.payload && item.qty > 1
-                  ? { ...item, qty: item.qty - 1 }
-                  : item
-              ),
-            };
-        default:
-            return state
-}
-}
+import { toast } from "react-toastify";
 
-export const DataProvider = ({children})=>{
-    const [state , dispatch] = useReducer(DataReducer , initialState)
-    const navigate = useNavigate()
-  const location = useLocation()
-const [categoryName , setCategoryName] = useState("")
-const getProductAndCategoryData = async() =>{
-try{
-const res = await fetch("/api/categories")
-const {categories} = await res.json()
-console.log( categories);
-dispatch({type : "category_handle" , payload : categories})
+import { DataReducer, initialState } from "../reducer/DataReducer";
+import {
+  fetchCategoriesSuccess,
+  fetchCategoriesError,
+  fetchProductsSuccess,
+  fetchProductsError,
+  setWishlist,
+  setCart,
+} from "../actions/actions";
 
-const productList = await fetch("/api/products" )
-const {products} =await productList.json()
-console.log("products" , products)
-dispatch({type: "productFetch" , payload : products})
+export const DataContext = createContext();
 
-}
-catch(e){
-    console.error(e);
-}
-}
+export const DataProvider = ({ children }) => {
+  const encodedToken = localStorage.getItem("token");
+  const [state, dispatch] = useReducer(DataReducer, initialState);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [categoryName, setCategoryName] = useState("");
 
-    useEffect(()=>{
-getProductAndCategoryData()
-    },[])
-    const addToCart = async (item) => {
-        const data = { product: { ...item } };
-      
-        if (localStorage?.getItem("token")) {
-          const response = await fetch("/api/user/cart", {
-            method: "POST",
-            headers: {
-              "authorization": localStorage?.getItem("token"),
-              "Content-Type": "application/json" 
-            },
-            body: JSON.stringify(data)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoryResponse = await fetch("/api/categories");
+        if (!categoryResponse.ok) {
+          throw new Error("Failed to fetch categories");
+        }
+        const { categories } = await categoryResponse.json();
+        dispatch(fetchCategoriesSuccess(categories));
+
+        const productResponse = await fetch("/api/products");
+        if (!productResponse.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const { products } = await productResponse.json();
+        dispatch(fetchProductsSuccess(products));
+      } catch (error) {
+        dispatch(fetchCategoriesError(error.message));
+        dispatch(fetchProductsError(error.message));
+      }
+
+      if (encodedToken) {
+        try {
+          const cartResponse = await fetch("/api/user/cart", {
+            headers: { authorization: encodedToken },
           });
-      
-          console.log(await response.json());
-          console.log(state);
-      
-          // Fetch updated cart items
-          const cartItems = await fetch("/api/user/cart", {
-            headers: {
-              "authorization": localStorage.getItem("token")
-            }
+          if (!cartResponse.ok) {
+            throw new Error("Failed to fetch cart");
+          }
+          const cartData = await cartResponse.json();
+          dispatch(await setCart(cartData.cart));
+          const wishlistResponse = await fetch("/api/user/wishlist", {
+            headers: { authorization: encodedToken },
           });
-      
-          const { cart } = await cartItems.json();
-          console.log("cart1", cart);
-      
-          // Dispatch action to update cart in state
-          dispatch({ type: "cart-manager", payload: cart });
-          console.log(state);
-          toast.success("Added To Cart" , {
-            autoClose: 1000})
-        } else {
-          // Redirect to login page
-          navigate("/login", { state: { from: location }, replace: true });
+          if (!wishlistResponse.ok) {
+            throw new Error("Failed to fetch wishlist");
+          }
+          const wishlistData = await wishlistResponse.json();
+          dispatch(await setWishlist(wishlistData.wishlist));
+        } catch (error) {
+          console.log("Error fetching cart or wishlist: ", error);
         }
-        
-      };
-      const removeFromCart = async(productId) =>{
-        try{
-          const response = await fetch(`/api/user/cart/${productId}` , {
-              method : "DELETE",
-              headers : {"authorization" : localStorage?.getItem("token")}
+      }
+    };
 
-          })
-          const {cart} = await response.json()
-          dispatch({type : "cart-manager" , payload: cart})
-          console.log("cart after removing" , cart);
-      }
-      catch(e){
-          console.error(e);
-      }
-      toast.success('Removed from cart' , {
-        autoClose: 1000})
-      }
-      const addToWishList = async(item)=>{
-        const data = {product : {...item}}
-        if (localStorage?.getItem("token")) {
-          const response = await fetch("/api/user/wishlist" , {method : "POST" , headers : {"authorization" : localStorage?.getItem("token")} , body : JSON.stringify(data) })
-          console.log(await response.json());
-          console.log(state)
-          const wishlistItems = await fetch("/api/user/wishlist", {headers : {
-            "authorization" : localStorage.getItem("token")
-          } })
-          const {wishlist} = await wishlistItems.json()
-          console.log("wishlist add to" , wishlist)
-          dispatch({type : "wishlist-manager" , payload: wishlist})
-          console.log(state);
-          
-          toast.success('Added to Wishlist' , {
-            autoClose: 1000})
-        
-        } else {
-          // Redirect to login page
-          navigate("/login", { state: { from: location }, replace: true });
-        }
-        // api for post to cart
-            }
-    const removeFromWishlist = async(productId) =>{
-        try{
-            const response = await fetch(`/api/user/wishlist/${productId}` , {
-                method : "DELETE",
-                headers : {"authorization" : localStorage?.getItem("token")}
-  
-            })
-            const {wishlist} = await response.json()
-            dispatch({type : "wishlist-manager" , payload: wishlist})
-            console.log("wishlist after removing" , wishlist);
-        }
-        catch(e){
-            console.error(e);
-        }
-        toast.success('Removed from Wishlist' , {
-          autoClose: 1000})
+    fetchData();
+  }, [encodedToken, dispatch]);
+
+  const addToCart = async (item) => {
+    const data = { product: { ...item } };
+    console.log("add to cart", data);
+
+    if (localStorage?.getItem("token")) {
+      const cartResponse = await fetch("/api/user/cart", {
+        method: "POST",
+        headers: {
+          authorization: localStorage?.getItem("token"),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const { cart } = await cartResponse.json();
+      dispatch(setCart(cart));
+      toast.success("Added To Cart", {
+        autoClose: 1000,
+      });
+    } else {
+      navigate("/login", { state: { from: location }, replace: true });
     }
+  };
+  const removeFromCart = async (productId) => {
+    try {
+      const response = await fetch(`/api/user/cart/${productId}`, {
+        method: "DELETE",
+        headers: { authorization: localStorage?.getItem("token") },
+      });
+      const { cart } = await response.json();
+      dispatch(setCart(cart));
+    } catch (e) {
+      console.error(e);
+    }
+    toast.success("Removed from cart", {
+      autoClose: 1000,
+    });
+  };
 
-    return(
-        <DataContext.Provider value={{ categoryName , setCategoryName , state ,dispatch , addToCart, removeFromCart , addToWishList , removeFromWishlist}}>
-            {children}
-        </DataContext.Provider>
-    )
-}
+  const updateCartItemQuantity = async (itemId, actionType, itemQuantity) => {
+    try {
+      if (itemQuantity === 1 && actionType === "decrement") {
+        removeFromCart(itemId);
+      }
+      const response = await fetch(`/api/user/cart/${itemId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          action: {
+            type: actionType,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to ${actionType} item quantity`);
+      }
+
+      const { cart } = await response.json();
+      dispatch(setCart(cart));
+      toast.success("Updated Cart Item Quantity", { autoClose: 70 });
+    } catch (error) {
+      console.log(`Error ${actionType}ing quantity:`, error);
+    }
+  };
+
+  const addToWishList = async (item) => {
+    const data = { product: { ...item } };
+    if (localStorage?.getItem("token")) {
+      const wishlistResponse = await fetch("/api/user/wishlist", {
+        method: "POST",
+        headers: { authorization: localStorage?.getItem("token") },
+        body: JSON.stringify(data),
+      });
+      const { wishlist } = await wishlistResponse.json();
+      dispatch(setWishlist(wishlist));
+
+      toast.success("Added to Wishlist", {
+        autoClose: 1000,
+      });
+    } else {
+      navigate("/login", { state: { from: location }, replace: true });
+    }
+  };
+  const removeFromWishlist = async (productId) => {
+    try {
+      const response = await fetch(`/api/user/wishlist/${productId}`, {
+        method: "DELETE",
+        headers: { authorization: localStorage?.getItem("token") },
+      });
+      const { wishlist } = await response.json();
+      dispatch(setWishlist(wishlist));
+    } catch (e) {
+      console.error(e);
+    }
+    toast.success("Removed from Wishlist", {
+      autoClose: 1000,
+    });
+  };
+
+  return (
+    <DataContext.Provider
+      value={{
+        categoryName,
+        setCategoryName,
+        state,
+        dispatch,
+        addToCart,
+        removeFromCart,
+        addToWishList,
+        removeFromWishlist,
+        updateCartItemQuantity,
+      }}
+    >
+      {children}
+    </DataContext.Provider>
+  );
+};

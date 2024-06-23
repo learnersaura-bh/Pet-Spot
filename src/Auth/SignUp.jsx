@@ -1,23 +1,13 @@
 import React, { useState } from "react";
-import {toast} from "react-toastify"
 import { useNavigate } from "react-router";
+import { useAuthContext } from "../Contexts/AuthContext";
+import { signUpFields } from "../constants";
 
 export const Signup = () => {
-  const navigate = useNavigate()
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: "",
-    email: '',
-    password: '',
-    confirmPassword: ""
-  });
-  const [errors, setErrors] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: ""
-  });
+  const navigate = useNavigate();
+  const { userSignup } = useAuthContext();
+  const [formData, setFormData] = useState(signUpFields);
+  const [errors, setErrors] = useState(signUpFields);
 
   const handleChange = (e) => {
     const fieldName = e.target.name;
@@ -26,27 +16,15 @@ export const Signup = () => {
   };
   const validateForm = () => {
     let isValid = true;
-    const updatedErrors = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: ""
-    };
-
-    // Validate First Name
+    const updatedErrors = { ...signUpFields };
     if (!formData.firstName) {
       updatedErrors.firstName = "First Name is required";
       isValid = false;
     }
-
-    // Validate Last Name
     if (!formData.lastName) {
       updatedErrors.lastName = "Last Name is required";
       isValid = false;
     }
-
-    // Validate Email
     if (!formData.email) {
       updatedErrors.email = "Email is required";
       isValid = false;
@@ -54,14 +32,10 @@ export const Signup = () => {
       updatedErrors.email = "Invalid Email";
       isValid = false;
     }
-
-    // Validate Password
     if (!formData.password) {
       updatedErrors.password = "Password is required";
       isValid = false;
     }
-
-    // Validate Confirm Password
     if (!formData.confirmPassword) {
       updatedErrors.confirmPassword = "Confirm Password is required";
       isValid = false;
@@ -75,60 +49,59 @@ export const Signup = () => {
   };
 
   const submitHandler = async (e) => {
-
     e.preventDefault();
- if (validateForm()){
-    try {
-        const cred = {
-          name: formData.firstName + " " + formData.lastName,
-          email: formData.email,
-          password: formData.password
-        };
-  
-        const response = await fetch("/api/auth/signup", {
-          method: "POST",
-          body: JSON.stringify(cred)
-        });
-  
-        const { encodedToken } = await response.json();
-  // localStorage.setItem("token" , encodedToken)
-        console.log(encodedToken ? "Signed Up after form submission" : "Sign Up Failed");
-        toast.success("Signed Up successfully" , {autoClose : 1000});
-        navigate("/login")
-      } catch (e) {
-        console.error(e);
-      }
- }
-
-    
+    if (validateForm()) {
+      const credentials = {
+        name: formData.firstName + " " + formData.lastName,
+        email: formData.email,
+        password: formData.password,
+      };
+      userSignup(credentials);
+      navigate("/products", { replace: true });
+    }
   };
 
   return (
     <div className="login-container">
-    <div className="login-page">
+      <div className="login-page">
         <h2>Sign Up</h2>
         <div className="label-input">
           <label htmlFor="first-name">First Name</label>
-          <input type="text" placeholder="Enter first name" id="first-name" name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          required />
+          <input
+            type="text"
+            placeholder="Enter first name"
+            id="first-name"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
           {errors.firstName && <span>{errors.firstName}</span>}
         </div>
         <div className="label-input">
           <label htmlFor="last-name">Last Name</label>
-          <input type="text" placeholder="Enter last name" id="last-name" name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required />
+          <input
+            type="text"
+            placeholder="Enter last name"
+            id="last-name"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
           {errors.lastName && <span>{errors.lastName}</span>}
         </div>
         <div className="label-input">
           <label htmlFor="email">Email</label>
-          <input type="email" placeholder="Enter e-mail" id="email" name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required />
+          <input
+            type="email"
+            placeholder="Enter e-mail"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
           {errors.email && <span>{errors.email}</span>}
         </div>
         <div className="label-input">
@@ -138,9 +111,9 @@ export const Signup = () => {
             placeholder="Enter your password"
             id="password"
             name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
+            value={formData.password}
+            onChange={handleChange}
+            required
           />
           {errors.password && <span>{errors.password}</span>}
         </div>
@@ -150,20 +123,19 @@ export const Signup = () => {
             type="password"
             placeholder="Enter your password"
             id="password"
-          
-          onChange={handleChange}
-          required
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          
+            onChange={handleChange}
+            required
+            name="confirmPassword"
+            value={formData.confirmPassword}
           />
           {errors.confirmPassword && <span>{errors.confirmPassword}</span>}
         </div>
         <div className="login-buttons">
-          <button onClick={submitHandler} type="submit">Sign Up</button>
+          <button onClick={submitHandler} type="submit">
+            Sign Up
+          </button>
         </div>
       </div>
-      
     </div>
   );
 };
