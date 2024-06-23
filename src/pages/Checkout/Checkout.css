@@ -1,0 +1,7 @@
+.checkout {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1rem auto;
+  align-items: flex-start;
+  min-height: 80vh;
+}

@@ -1,19 +1,20 @@
-import "./Auth.css"
+import "./Auth.css";
 import React, { useState } from "react";
-import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from "react-router";
+import { useAuthContext } from "../Contexts/AuthContext";
 
 export const Login = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
+  const location = useLocation();
+  const { userLogin } = useAuthContext();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const [errors, setErrors] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -26,114 +27,62 @@ export const Login = () => {
     let isValid = true;
     const updatedErrors = {
       email: "",
-      password: ""
+      password: "",
     };
-
-    // Validate Email
     if (!formData.email) {
       updatedErrors.email = "Email is required";
       isValid = false;
     }
-
-    // Validate Password
     if (!formData.password) {
       updatedErrors.password = "Password is required";
       isValid = false;
     }
-
     setErrors(updatedErrors);
     return isValid;
   };
 
   const submitHandler = async () => {
-    // e.preventDefault();
-
-    // if (validateForm()) {
-      try {
+    try {
+      if (validateForm()) {
         const cred = {
           email: formData.email,
-          password: formData.password
+          password: formData.password,
         };
-
-        const response = await fetch("/api/auth/login", {
-          method: "POST",
-          body: JSON.stringify(cred)
+        await userLogin(cred);
+        navigate(location.state?.from?.pathname || "/products", {
+          replace: true,
         });
-
-        // const data  = await response.json();
-
-const {encodedToken} = await response.json()
-console.log(encodedToken);
-        if (encodedToken) {
-          // Login successful
-          console.log("Logged in");
-          console.log(encodedToken);
-          localStorage.setItem("token" , encodedToken)
-          setFormData({
-            email: "",
-            password: ""
-          });
-          toast.success("Logged In successfully" , {autoClose : 1000});
-          navigate(location?.state?.from?.pathname || "/products" )
-        } else {
-          // Login failed
-          console.log("Login failed");
-        }
-      } catch (e) {
-        console.error(e);
       }
-    // }
-    
-    
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setFormData({ email: "", password: "" });
+    }
   };
- const loginAsTestUser = async() => {
-  setFormData({email: "adarshbalika@gmail.com",
-            password: "adarshbalika"}) 
-            try {
-              const cred = {
-                email: "adarshbalika@gmail.com",
-                password: "adarshbalika"
-              };
-      
-              const response = await fetch("/api/auth/login", {
-                method: "POST",
-                body: JSON.stringify(cred)
-              });
-      
-              // const data  = await response.json();
-      
-      const {encodedToken} = await response.json()
-      console.log(encodedToken);
-              if (encodedToken) {
-                // Login successful
-                console.log("Logged in");
-                console.log(encodedToken);
-                localStorage.setItem("token" , encodedToken)
-                setFormData({
-                  email: "",
-                  password: ""
-                });
-                toast.success("Logged In successfully" , {autoClose : 1000});
-                navigate(location?.state?.from?.pathname || "/products" )
-              } else {
-                // Login failed
-                console.log("Login failed");
-              }
-            } catch (e) {
-              console.error(e);
-            } 
- }
+  const loginAsTestUser = () => {
+    const testUserData = {
+      email: "adarshbalika@gmail.com",
+      password: "adarshbalika",
+    };
+    userLogin(testUserData);
+    navigate("/products", { replace: true });
+  };
+
   return (
     <div className="login-container">
-       <div className="login-page">
+      <div className="login-page">
         <h2>Login</h2>
         <div className="label-input">
           <label htmlFor="email">Email</label>
-          <input type="email" placeholder="Enter e-mail" id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required />
+          <input
+            type="email"
+            placeholder="Enter e-mail"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
         </div>
         <div className="label-input">
           <label htmlFor="password">Password</label>
@@ -142,15 +91,24 @@ console.log(encodedToken);
             placeholder="Enter your password"
             id="password"
             name="password"
-          value={formData.password}
-          onChange={handleChange}
+            value={formData.password}
+            onChange={handleChange}
           />
           {errors.password && <span>{errors.password}</span>}
         </div>
         <div className="login-buttons">
-          <button type="submit" onClick={submitHandler}>Login</button>
-          <button type="submit" onClick={loginAsTestUser} >Login as Test User</button>
-          <strong style={{color: "green" , cursor: "pointer"}} onClick={() => navigate("/signup")}>Create New Account  </strong>
+          <button type="submit" onClick={submitHandler}>
+            Login
+          </button>
+          <button type="submit" onClick={loginAsTestUser}>
+            Login as Test User
+          </button>
+          <strong
+            style={{ color: "green", cursor: "pointer" }}
+            onClick={() => navigate("/signup", { replace: true })}
+          >
+            Create New Account{" "}
+          </strong>
         </div>
       </div>
     </div>

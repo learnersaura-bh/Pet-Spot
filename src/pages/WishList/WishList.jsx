@@ -3,31 +3,36 @@ import { DataContext } from "../../Contexts/DataContext";
 import * as AiIcon from "react-icons/ai";
 import "./Wishlist.css";
 export const WishList = () => {
-  const { state, dispatch, addToCart, removeFromWishlist } = useContext(
-    DataContext
-  );
+  const {
+    state,
+    addToCart,
+    removeFromWishlist,
+    updateCartItemQuantity,
+  } = useContext(DataContext);
 
   const addToCartFromWishlist = (item) => {
     state.cartList.find(({ _id }) => _id === item._id)
-      ? dispatch({ type: "INCREMENT_QUANTITY", payload: item._id })
+      ? updateCartItemQuantity(item._id, "increment")
       : addToCart(item);
   };
   return (
-    <div className="wishlist-container">
+    <div className="wishlist-page">
+      <h2>Wishlist</h2>
       {state?.wishList.length > 0 ? (
-        <div>
+        <div className="wishlist-container">
           {state.wishList.map((item) => {
             const { _id, price, title, rating, imgUrl } = item;
             return (
               <div className="single-wishlist-card">
-                <img src={imgUrl} alt={title} height="150px" width="120px" />
+                <div className="wishlist-card-image">
+                  <img src={imgUrl} alt={title} />
+                </div>
                 <div className="wishlist-product-detail">
                   <div>
-                    {" "}
                     <h4>{title}</h4>
-                    <span className="icon-para rating">
-                      {rating}{" "}
-                      <AiIcon.AiFillStar color="rgb(75, 214, 29)" size={20} />
+                    <span className="rating">
+                      {rating}
+                      <AiIcon.AiFillStar color="#FFD700" />
                     </span>
                   </div>
                   <hr />

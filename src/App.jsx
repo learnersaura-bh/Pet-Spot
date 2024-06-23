@@ -13,6 +13,8 @@ import { RequiresAuth } from "./Components/RequireAuth";
 import { Navbar } from "./Components/Navbar/Navbar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { RouteNotFound } from "./pages/RouteNotfound/RouteNotFound";
+import { Footer } from "./Components/Footer/Footer";
 function App() {
   return (
     <div className="App">
@@ -51,7 +53,9 @@ function App() {
             </RequiresAuth>
           }
         />
+        <Route path="*" element={<RouteNotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

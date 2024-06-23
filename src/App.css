@@ -1,14 +1,16 @@
-*{
+* {
   margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
-
-button{
+button {
   cursor: pointer;
 }
 
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
+}
+.App {
+  background-color: #e2e1e1;
 }

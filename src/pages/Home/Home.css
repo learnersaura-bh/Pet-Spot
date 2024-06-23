@@ -1,136 +1,110 @@
-.home{
-   margin-top: 5rem;
+.hero-carousel {
+  margin-top: 80px;
+  background-color: #fff;
+  position: relative;
 }
-.container {
-    background-color: #fff6f9;
-    background: linear-gradient(to right, #b1b4d5 0%, #fff6f9 50%);
-    height: 22rem;
-    display: flex;
-    margin-left: 2rem ;
-    margin-right: 2rem;
-    /* flex-direction: co; */
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 3rem;
-  }
-  
 
-  
-  .call {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+.carousel-item {
+  position: relative;
+  height: 70vh;
+}
+
+.carousel-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.carousel-caption {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  text-align: center;
+  color: white;
+}
+
+.second-carousel-caption {
+  position: absolute;
+  top: 86.5%;
+  left: 44.8%;
+}
+.second-carousel-caption button {
+  border: none;
+  padding: 19px 60px;
+  background-color: transparent;
+  cursor: pointer;
+  color: transparent;
+}
+
+.carousel-caption h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.carousel-caption p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.carousel-caption button {
+  padding: 0.75rem 2rem;
+  background-color: rgb(32, 32, 32);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-caption button:hover {
+  background-color: rgb(0, 0, 0);
+}
+
+/* Add responsive styling */
+@media (max-width: 800px) {
+  .carousel-caption h1 {
+    font-size: 3rem;
   }
 
+  .carousel-caption p {
+    font-size: 1.2rem;
+  }
 
-  
-  
-  .spot-title {
-    color: #5e17eb;
-    font-size: 4rem;
-    margin-bottom: 0rem;
+  .carousel-caption button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
   }
-  
-  .spot-description {
-    color: #ff3131;
-    text-align: right;
-    font-size: 18px;
-    font-weight: 600;
-    font-style: oblique;
+  .carousel-item {
+    height: 50vh;
   }
-  
-  .spot-image {
-    height: 15rem;
-    width: 25rem;
-  }
-  
-  .shop-button {
-    border: none;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    background-color: #5e17eb;
-    color: white;
-    font-size: 16px;
-    transition: 750ms;
-  }
-  
-  .shop-button:hover {
-    background-color: rgb(4, 0, 73);
-  }
-  
-  @media (max-width: 800px) {
-    .spot-image {
-      height: 10rem;
-      width: 18rem;
-    }
-  
-    .shop-button {
-      padding: 0.5rem 0.8rem;
-      font-size: 13px;
-    }
-  
-    .spot-title {
-      font-size: 3.3rem;
-    }
-  
-    .spot-description {
-      font-size: 15px;
-    }
+}
 
-  }
-  
-  @media (max-width: 600px) {
-    .container {
-      flex-direction: column;
-      align-items: center;
-      height: 22rem;
-      justify-content: space-around;
-    }
-  
-    .spot-image {
-      height: 8rem;
-      width: 15rem;
-    }
-  
-    .call {
-      height: auto;
-      justify-content: center;
-      align-items: center;
-    }
-  
-    
-  }
-  .category-container {
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    list-style: none;
-    flex-wrap: wrap;
-  }
-  .pets-category {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .pets-image {
-    height: 12rem;
-    border-radius: 18rem;
-    transition: 550ms;
-  }
-  .pets-image:hover {
-    box-shadow: 0px 0px 8px rgb(174, 162, 162);
-  }
-  footer{
-    background-color: rgb(69, 87, 190);
-    display: flex;
-    margin-top: 3rem;
-    justify-content: center;
-    gap: 1rem;
-    align-items: center;
-    padding: 2rem 0rem;
-  }
+.category-container {
+  max-width: 70%;
+  margin: 4rem auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.pets-category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pets-image {
+  height: 13.5rem;
+  border-radius: 18rem;
+  transition: 350ms;
+  mix-blend-mode: multiply;
+}
+
+.pets-category .pets-image:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
